@@ -1,3 +1,4 @@
+
 import express from 'express';
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
@@ -8,7 +9,7 @@ import pkg from 'pg';
 const { Pool } = pkg;
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(fileUpload());
@@ -16,6 +17,10 @@ app.use(bodyParser.json());
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || 'postgresql://postgres:password@localhost:5432/autospec'
+});
+
+app.get('/', (req, res) => {
+  res.send('API is live');
 });
 
 app.get('/cars', async (req, res) => {
