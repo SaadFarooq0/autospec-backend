@@ -1,10 +1,8 @@
-
 import express from 'express';
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import fs from 'fs';
-import pdfParse from 'pdf-parse';
 import pkg from 'pg';
 
 const { Pool } = pkg;
@@ -45,6 +43,7 @@ app.delete('/cars/:id', async (req, res) => {
 });
 
 app.post('/extract-pdf-specs', async (req, res) => {
+  const pdfParse = (await import('pdf-parse')).default;
   if (!req.files || !req.files.file) return res.status(400).send('No file uploaded');
 
   const pdfBuffer = req.files.file.data;
